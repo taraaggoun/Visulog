@@ -1,0 +1,24 @@
+CommitsPerDatePlugin
+
+Il s'agit d'un plugin permet d'obtenir un aperçu du nombre de commits réalisé sur le projet par jour.
+
+//Informations liées au visuel
+Pour avoir le meilleur rendu visuel possible, j'ai décidé de le mettre sous forme de graphique en barre.
+Ainsi, on peut voir clairement le nombre de commits réalisé.
+Notons que les dates sont mises dans l'ordre chrnologique.
+Pour obtenir le meilleur plugin possible, j'ai décidé de l'améliorer pour obtenir un rendu détaillé (propre à chaque jour).
+C'est à dire qu'un tableau détaillant le nom des personnes qui ont fait des commits avec leur nombre est affiché sous le graphique.
+
+//Informations sur la réalisation du plugin
+
+Pour la réalisation de ce plugin, il était necessaire de manier différents tableau (pour l'obtention du tableau propre
+à chaque jour), mais également une Map pour pouvoir relier chaque jour à un nombre de commit.
+Les dates ont dues être parser pour obtenir un format plus simple à la lecture.
+des méthodes extérieures ont été ajoutées comme "estPresent()", "ajoutdate()" et "ajout()" pour simplifier l'écriture
+du plugin.
+Code pour l'otention du graphique en barre récuperer sur le site canvasjs.com
+    -> modification des couleurs
+    -> implémentation des données (en ayant pris soin de trier la Map auparavant)
+création d'un tableau contenant toutes les données par jour
+création d'une fonction permettant l'affichage du tableau lors d'un clic sur une barre du graphique
+

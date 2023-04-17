@@ -1,0 +1,110 @@
+            Documentation Author
+
+Toute les classes font partie du package up.visulog.gitrawdata.
+Les differentes classes utilise une API, l'API Json.
+
+La classe Author.java
+    - Elle contient deux attributs et deux getteur pour les attributs
+        - de type String, name, qui contient le nom de l'auteur
+        - de type String, username, qui contient l'identifiant de l'auteur
+    - un constructeur qui prend deux String en arguments et initialise les attributs
+    - une fonction toString(), qui retourne le nom de l'auteur et son identifiant sous forme d'une chaine de caractères
+
+La classe Authors.java
+    - Authors importe:
+        .import com.google.gson.Gson;   -> La classe Gson est la classe principale de l'API Object Model
+        .import java.io.FileReader;     -> La classe sert poir la lecture de fichier de caractères
+        .import java.io.IOException;    -> Signaux indiquant qu’une exception d’une sorte ou d’une autre s’est produite. 
+        .import java.io.Reader;         -> Classe abstraite pour lire les flux de caractères. 
+        .import java.util.ArrayList;    -> Implémentation de tableau redimensionnable de l’interface List.
+        .import java.util.Arrays;       -> Cette classe contient diverses méthodes pour manipuler les tableaux 
+        .import java.util.Collection;   ->  Une collection représente un groupe d’objets.
+
+    - Elle contient un attribut qui est une collection d'auteur et son getteur
+    - un constructeur qui initialise la collection a null
+    - une methode getAuthorsFromJson qui renvoie une collection d'auteur et prend en parametre un privateToken et l'idee du projet
+        - cette methode récupére le contenue dans resultsAuthors.json et pour chaque auteur l'ajoute a la collection d'auteur
+
+La classe RetourAPI.java
+    - RetourAPI importe:
+        .import java.io.InputStreamReader;  -> Un InputStreamReader est un pont entre les flux d’octets et les flux de caractères 
+        .import java.io.BufferedReader;     -> Lit du texte à partir d’un flux d’entrée de caractères
+        .import java.io.FileWriter;         -> Classe pratique pour l’écriture de fichiers de caractères. 
+        .import java.io.File;               -> Une représentation abstraite des chemins d’accès de fichiers et de répertoires.
+
+    - une methode createLogFIleForAuthors qui a comme parametre un privateToken et l'id du projet
+        cette methode crée un fichier(resultsAuthors.json) dans le repertoire GitLog, puis ecris dans ce fichier la liste des membres
+
+Pour utiliser le la classe auteur dans un plugin on doit comparer l'auteur du commit a la liste des membre du projet, si l'auteur n'est pas dans la liste il faut le rajouter.
+exemple du code de la fonction processLog:
+
+    static Result processLog(List<Commit> gitLog) {
+
+        Authors a = new Authors(); //creation d'une variable de type authors 
+        ArrayList<Author> authors = new ArrayList<>();//creation d'une ArrayListe qui va contenir tout les auteurs
+        authors.addAll(a.getAuthorsFromJson(privateToken,id));// ajouts de tout les membres du projet a authors
+
+        boolean added; //boolean qui sert a savoir si l'auteur a été ajouté ou non a authors
+        var result = new Result(); //initalisation de la variable result
+
+        for (var commit : gitLog) { //parcours de la liste de commit
+            added = false;//initialisation du boolean a false;
+
+            for (var author : authors) { //parcours de collection d'auteur
+
+                String commitauthor = commit.author.toLowerCase(); //convertie le nom de l'auteur du commit en miniscule 
+                String authorname = author.getName().toLowerCase(); //convertie le nom de l'authors dans authors en minuscule
+                String [] ca = commitauthor.split(" "); // sépare le nom de l'auteur du commit en fonction des espaces
+                String [] an = authorname.split(" "); //sépare le nom de l'auteur dans authors en fonction des espaces
+                
+                if(ca.length == 2) { // le cas ou le nom de l'auteur du commit et soit l'identifiant soit juste le nom soit juste le prenom
+                    if(ca[0].equals(author.getUsername())){ // compare si c'est l'identifiant 
+                        added = true; //l'auteur a bien était ajouté dans la liste
+                        result.nom_de_la_map.put(author.name, valeur); //ajout dans la map les valeur
+                    } 
+                    if(an[0].equals(ca[0]) || an[1].equals(ca[0])){ //compare si c'est le nom ou le prenom
+                        added = true; //l'auteur a bien était ajouté dans la liste
+                        result.nom_de_la_map.put(author.name, valeur); //ajout dans la map les valeur
+                    }
+                    if(an.length == 3){ // si l'auteur a 2 noms
+                        if(an[2].equals(ca[0])){ // compare si c'est le même prenom
+                            added = true; //l'auteur a bien était ajouté dans la liste
+                            result.nom_de_la_map.put(author.name, valeur); //ajout dans la map les valeur
+                        }
+                    }
+                }
+                if(ca.length == 3) { //le cas ou commit.author est de la forme nom prenom ou prenom nom
+                    if(ca[1].equals(an[1]) || ca[0].equals(an[1])){
+                        added = true; //l'auteur a bien était ajouté dans la liste
+                        result.nom_de_la_map.put(author.name, valeur); //ajout dans la map les valeur                    }
+                    if(an.length == 3){ // si l'auteur a 2 noms 
+                        if(ca[0].equals(an[2])){
+                            added = true; //l'auteur a bien était ajouté dans la liste
+                            result.nom_de_la_map.put(author.name, valeur); //ajout dans la map les valeur                        }
+                    }
+                }
+                if(ca.length == 4){// le cas ou l'auteur a 2 noms
+                    if(an.length == 3){
+                        if (an[2].equals(ca[2])){
+                            added = true;//l'auteur a bien était ajouté dans la liste
+                            result.nom_de_la_map.put(author.name, valeur); //ajout dans la map les valeur
+                        }
+                    }
+                }
+            }
+             if(!added){//si l'auteur n'a pas était ajouté a l'arrayList
+                String [] ca = commit.author.split(" "); // separe le nom de l'auteur du commit en fonction des espace
+                if(ca.length == 3){
+                    Author au = new Author(ca[0]+ca[1], ca[0]+ca[1]);//creation d'un nouvelle auteur
+                    authors.add(au);//ajout de l'auteur a l'arrayList
+                    result.nom_de_la_map.put(ca[0]+ca[1], valeur);//ajoute dans result le nom de l'auteur avec la valeur
+                }
+                if(ca.length == 2){
+                    Author au = new Author(ca[0],ca[0]);//creation d'un nouvelle auteur
+                    authors.add(au);//ajout de l'auteur a l'arrayList
+                    result.nom_de_la_map.put(ca[0], valeur);//ajoute dans result le nom de l'auteur avec la valeur
+                }
+            }
+        }
+        return result;
+    }

@@ -1,0 +1,9 @@
+Webgen est un générateur site web statique.
+Aucun serveur n'est nécessaire  afin de consulter le site.
+
+La commande webgen create sample_site permet de créer un exemple de site.
+Lors d'une création de site webgen créé au moins trois fichiers:
+
+    -default.template : Le modèle du site cad le code html du site
+    -default.css : une feuille de style basique en css
+    -index.page : la page index pour le dossier racine du site.

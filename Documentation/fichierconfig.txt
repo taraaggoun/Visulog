@@ -1,0 +1,75 @@
+
+Dans main/java/up/visulog/config
+
+2 fichiers java executable :
+
+-----------------------------------
+
+Configuration.java :
+
+UN package est une unité (un fihcier) qui contient des classes
+Ici on a le package up.visulog.config
+
+1.class java ArrayList: C'est une classe de tableaux dont la taille peuvent être modifiée au contraire d'un tableau classique java.DEs éléments peuvent être ajoutés ou enlevés de ces tableaux à tout moment.
+
+2.class java List:  C'est une liste d'éléments dont la position est accessible grâce à un indice entier. L'utilisateur peut voir où chaque élément est positionné dans la liste si il le veut.
+
+3.class Java Map :  L'interface java.util.Map contient les pairs <clé, valeur>. Chaque pair est connu comme entrée.L'interface Map peut être implémenté avec les collections d'objets qui héritent de lui.
+
+4.class Java nio.file.Path
+
+Cette classe conciste exclusivement en des méthodes static qui renvoient un Path en convertissant un string path ou un URI
+
+Class COnfiguration :
+
+Variable privée finale de type Path nommée gitPath
+
+Variable finale de type Map avec une paire <String, PluginConfig> nomméé plugins
+
+
+Un constructeur public Configuration qui prend en argument un Path gitPath , et une variable Map<String,Plugin Config> plugins , il associe ces arguments aux variables définies en début de classe. les plugins placés en argument sont copiés dans les plugins de la classe.
+
+Un getter getGithPath() qui retourne la variable Path gitPath()
+
+un getter getPLuginConfigs() qui retourne les plugins 
+
+-------------------------------------
+
+PluginConfig.java:
+
+IL contient le même package que la classe Configuration.java
+
+IL y'a un commentaire : // TODO: define what this type should be (probably a Map: settingKey -> settingValue)
+
+IL faut définir le type de la variable , d'après eux c'est probablement un Map avec une pair settingKey setting Value
+
+
+ON trouve une interface PLuginConfig
+
+
+Une interface définit un comportement (d’une classe) qui doit être implémenté par une classe, sans implémenter ce comportement. C’est un ensemble de méthodes abstraites, et de constantes. Certaines interfaces ( Cloneable, Serializable, …) sont dites interfaces de «balisage» : elle n’imposent pas la définition d’une méthode, mais indiquent que les objets qui les implémentent ont certaines propriétés.
+
+Les différences entre les interfaces et les classes abstraites : 
+
+    Une interface n’implémente aucune méthode.
+    Une classe, ou une classe abstraite peut implémenter plusieurs interfaces, mais n’a qu’une super classe, alors qu’une interface peut dériver de plusieurs autres interfaces.
+    Des classes non liées hiérarchiquement peuvent implémenter la même interface
+
+--------------------------------------
+
+Dans test/java/up/visulog/config
+
+un fichier TestConfiguration.java:
+
+Le meme package que dans les autres fichiers est présent
+
+Un commentaire :
+
+/* Do not forget writing tests as soon as class Configuration contains more than just getters     (or if they or the constructor start doing something smart!).      */
+
+IL explique qu'il faut ecrire des test dès que la classe Configuration contiendra plus que des simples getters.
+
+
+
+
+

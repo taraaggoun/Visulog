@@ -1,0 +1,47 @@
+			Contibution Lines 
+
+I-Généralité
+	Le but de ce plugin est de compter la contribution de lignes ajoutés et supprimés par auteur.
+
+	Pour lancer le plugin il faut utiliser la commande: ./gradlew run --args='. --addPlugin=contributionLines'
+
+	Le test plugin a le même fonctionnement que countLinesperAuthor	
+	
+II-Structure de la classe:
+	CountLinesperAuthorPlugin importe 
+		- up.visulog.config.Configuration;	-> voir documentation du fichier config
+		- up.visulog.gitrawdata.Commit;		-> voir documentation du fichier gitrawdata
+		-import up.visulog.gitrawdata.Author;	-> voir documentation du fichier gitrawdata
+		-import up.visulog.gitrawdata.Authors;	-> voir documentation du fichier gitrawdata
+
+		
+		- java.util.HashMap;	-> C'est une classe qui utilise la table de hachage de l’interface Map.
+		- java.util.List;	-> C'est une classe qui contient des liste d'éléments dont la position est accessible grâce à un indice entier.
+		- java.util.Map;	-> C'est une classe qui associe des clés à des valeurs. 
+		- java.util.TreeMap	-> C'est une map qui trie les clés selon l'ordre naturel des ses clés
+		- java.util.ArrayList;	-> c'est une implementation de la classe list en tableau.
+	
+	La classe implement analyzerplugin et contient:
+	
+	.2 attributs:
+		- configuration, de type Configuration qui contient les configuration du plugin.
+		- result, de type Result qui contient ce que le plugin va renvoyer.
+	
+	.un constructeur qui sert a initaliser l'attribut configuration.
+	
+	.3 methodes 
+		- processLog, qui renvoie un Result et qui prend en paramettre une list de commits, dans cette methode on parcours la liste de commit et une liste d'auteur et pour chaque commit rajoute dans les map de result le nombre ligne ajouté et supprimés de chaque commit pour chaque auteur.
+		-run, (redefini) de type void qui sert a lancer le plugin
+		-getResult, (redefini) retourne result, si il est null appelle la fonction run()
+
+	.une classe interne Result qui implemente AnalyzerPlugin.Result et qui contient:
+		-deux attributs Added et Deleted qui sont des map qui associe un String (le nom de l'auteur) a un integer(le nombre de ligne).
+		-4 methodes
+			*getAdded, de type Map<String, integer>qui renvoie Added.
+			*getDeleted, de type Map<String, integer>qui renvoie Deleted.
+			*getResultAsString, de type String, qui renvoie une chaine de caractère donnant pour chaque auteur combien de ligne il a ajoutés(entre les premieres accolade) et suppromés (entre les deuxiemes accolade).
+			*getResultAsHtmlDiv, de type String qui renvoie vers une page html ou l'on voit un diagramme en cammembert avec le pourcentaage du nombre de lignes ajoutés et un autre avec le pourcentage de nombre de lignes supprimés par auteur.
+
+
+
+

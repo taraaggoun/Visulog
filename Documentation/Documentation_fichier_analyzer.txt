@@ -1,0 +1,52 @@
+			Documentation Analyzer
+
+Le fichier Analyzer est constitué de un répertoire src qui contient 2 répertoire main et test.
+Un package est un fichier qui contient des classes, tout les fichier du repertoire partage le même package : package up.visulog.analyzer.
+
+I- Répertoire main/java/visulog/analyzer
+	Le répertoire est constitué de 17 fichiers exécutable java. 
+	
+	A- Analyzer.java 
+			Le fichier Analyzer.java importe 8 class :
+				-import up.visulog.config.Configuration; -> voir documentation config
+				-import up.visulog.config.PluginConfig;  -> voir documentation config
+				
+				-import java.util.ArrayList;	-> C'est une classe qui contient des liste (tableau redimentionable).
+				-import java.util.HashMap;	-> C'est une classe qui utilise la table de hachage de l’interface Map. 
+				-import java.util.List;		-> C'est une classe qui contient des liste d'éléments dont la position est accessible grâce à un indice entier.
+				-import java.util.Map;		-> C'est une classe qui associed des clés à des valeurs. 
+				-import java.util.Optional;	-> La classe optional sert a savoir si un objet est null.
+				-import java.util.stream.Collectors; -> Les implémentations de Collector implémentent diverses opérations, telles que l'accumulation d'éléments dans des collections, la synthèse d'éléments selon différents critères, etc.
+
+			La class Analyzer contient:
+				-deux attribut: un config, de type configuration  et un result, de type analyzerresult.
+				-un constructeur qui prend en argument un parametre de type config et qui initialise l'attribut config a la valeur donné en argument.
+				-3 methode:
+					-computeResult: ne rend pas de parametre et retourne un AnalyzerResult, cette methode permet de faire fonctionner plusieur plugin en même temps. 
+					-makePlugin: de type Optional<AnalyzerPlugin>, prend en argument le nom et les configuration d'un plugin et appelle la fonction instanciateur sur le nom du plugin en parametre.
+					-instanciateur: qui prend en argument le nom du plugin et qui renvoie un analyzerPlugin qui va permet de lancer les plugin.
+					
+		2-AnalyzerPugin.java
+			Le ficher AnalyzerPugin.java importe une classe, java.lang.module.Configuration**; 
+			AnalyzerPlugin est une interface(Une interface est une liste de noms de méthodes)et contient:
+				-une interface result qui contient deux methode(getteur) 
+					-getResultAsString(): de type String qui sert a recuperer la valeur de ResultAsString.
+					- getResultAsHtmlDiv(): de tpe Strinf qui sert a recuperer la valeur de ResultAsHtmlDiv.
+				-2 methode:
+					- run() de type void, qui va servir a lancer le plugin.
+					-getResult() de type Result, qui va servir a récupéré le result du plugin, si ce n'est pas déja fait il le lance d'abord. 
+					
+			Tout les plugin implementeront la classe AnalyzerPlugin, et toute leur classe intene result implementeront l'interface interne Result.
+			
+		3-AnalyzerResult.java
+			Le fichier AnalyzerResult.java importe une classe, java.util.List; -> C'est une class qui contient des liste d'éléments dont la position est accessible grâce à un indice entier.
+			la classe AnalyzerResult contient:
+				-un attribut subResults, de type List<AnalyzerPlugin.Result> qui est final. 
+				-un constructeur qui prend en argument un parametre de type List<AnalyzerPlugin.Result> et qui initialise subResults avec le parametre.
+				-3 methode :
+					-un getteur pour pouvoir récuperer subResults.
+					-to String de type String (redéfini) qui renvoie une chaine de caractére ce qu'il y a dans subResult.
+					-toHTML de type String qui renvoie sous forme de ligne html ce qu'il y a dans subResult.
+	
+		4-Les autre fichier:
+			Tout les 14 autres fichiers sont des Plugins, pour consulter la documentation il faut regarder celle du plugin en particulier.

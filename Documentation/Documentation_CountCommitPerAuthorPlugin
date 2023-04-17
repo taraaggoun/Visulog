@@ -1,0 +1,22 @@
+CountCommitPerAuthorPlugin
+
+Il s'agit d'un plugin représentant le nombre de commit réaliser par chaque auteur du projet.
+
+Nous somme passé d'un rendu sous forme console (fait par nos professeurs) à un rendu page web sous forme de tableau
+(on voyait nom, email, nombre de commit pour chaque personne) puis le total en bas.
+Les amélioration ont fait passer le plugin à un rendu sous forme de graphique en barre à finalement un graphique à
+2 barre.
+
+Lors de la réalisation de ce plugin, j'ai été confronté à un problème majeur : les auteurs ayant fait des commits sous
+differents noms n'etant pas considérer comme la même personne, ils apparaissaient plusieurs fois.
+Il a donc fallut ecrire un code détaillé pour pouvoir "regrouper" ces auteurs en une seule et même personnne.
+Nous avons discuté d'une classe Auteur (qui s'est vu terminée fin décembre) pour simplifier l'utilisation des données
+et des actions répétitives (et surtout d'oublier le cas par cas)
+
+Pour la réalisation de ce plugin, l'utilisation de 2 Map s'est vue être nécessaire.
+En effet, comme nous avons un graphique contenant deux barres pour différentes données, il fallait pouvoir les séparer.
+De plus, il fallait également récuperer d'une part, uniquement les commits sur cette branche, et d'une autre part, tous
+les commits.
+Il a donc fallut la création de la commande parseLogFromCommandAll (Merci Tara) et l'utiliser en même temps
+que parseLogFromCommand.
+J'ai donc décider de passer chaque liste de commit en argument pour simplifier l'utilisation des données.

@@ -1,0 +1,37 @@
+Documentation du fichier cli
+
+1.La classe CLILauncher se compose d'un main et de deux méthodes.
+
+a. Le main :
+
+   * Le main une [var], étant une variable qui prend le type que le compilateur considère correcte, avec l'option entrée en arguments.
+   * Le main teste si une commande a été tapée en argument : Si oui, cela lance l'analyse avec l'option donnée. Sinon, cela indique une erreur avec la méthode displayHelpExit.
+
+b. La méthode makeConfigFromCommandLineArgs() :
+
+   * La méthode makeConfigFromCommandLineArgs() prend en argument un tableau de String.
+   * La méthode makeConfigFromCommandLineArgs() gère les options ajoutées en arguments lors du lancement en allant chercher les plugins correspondants. De plus, si il n'y a pas d'arguments alors la méthode makeConfigFromCommandLineArgs() lance le programme en [default].
+   * Pour cela, la méthode makeConfigFromCommandLineArgs() utilise 3 bibliothèques:
+        + java.nio.file.FileSystems qui permet d'accéder à des fichiers et de récuperer le "path" du fichier/répertoire.
+        + java.util.HashMap qui permet de créer un "couple" [(clef, valeur)].
+        + java.util.Optional qui permet de stocker une valeur [null] ou [non-null] de plein de [type] différents.
+
+c. La méthode displayHelpExit() :
+
+   * La méthode displayHelpExit() indique que la commande (le paramètre) rentrée n'est pas la bonne.
+   * La méthode displayHelpExit() liste toutes les commandes (les paramètres) existantes avec leurs syntaxes et ensuite quitte.
+
+2. La classe TestCLILauncher se compose d'une seule méthode.
+
+a. La méthode testArgumentParser() :
+
+   * La méthode testArgumentParser() teste 2 cas de la méthode makeConfigFromCommandLineArgs() : un cas avec un paramètre en arguments existant et l'autre avec un paramètre en arguments non-existant.
+   * La méthode testArgumentParser() utilise assertFalse() et assertTrue() servant à faire une assertion sans utiliser de [if].
+   * La méthode testArgumentParser() permet de rendre le code plus clair et lisible.
+   * Un message d'erreur sera print pour prévenir l'utilisateur d'un problème si dans le programme il ne se passe pas ce qui était prévu.
+
+b. Le fichier Kotlin Script "build.gradle.kts" :
+
+   * Ce script lance le build du dossier cli en mettant la classe CLILauncher en classe principale et charge les autres fichiers nécessaires en tant que projet étant analyser config gitrawdata.
+
+Conclusion => Le fichier cli sert ainsi au lancement où se trouvent les classes permettant de lancer le programme que ce soit avec ou sans arguments.

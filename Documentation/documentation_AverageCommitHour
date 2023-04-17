@@ -1,0 +1,74 @@
+AverageCommitHour Plugin documentation :
+
+
+On retrouve au début quelques imports :
+
+        - up.visulog.config.Configuration;	          -> voir documentation du fichier config
+		- up.visulog.gitrawdata.Commit;		          -> voir documentation du fichier gitrawdata
+        - import java.text.DateFormat;                -> définit le format horaire utilisé dans le plugin
+        - import java.time.format.DateTimeFormatter;  -> Formateur de date voir doc date java
+        - import java.util.*;                         -> importation de tous les util AUX CAS OU
+
+
+
+Ensuite on trouve la classe AverageCommitHour qui implémente AnalyzerPlugin comme tous les Plugins.
+
+On y trouve 2 attributs:
+		- configuration de type Configuration qui contient les configuration du plugin.
+		- result de type Result qui contient ce que le plugin va renvoyer.
+
+Il y'a un constructeur qui sert a initaliser l'attribut configuration.
+
+On trouve ensuite la méthode principale processLog qui renvoie un Result et prend en argument une liste de commit.
+
+Voici un petit exemple de son fonctionnement pour faciliter la compréhension :
+
+
+------------------------EXEMPLE PLUGIN SUR ECHANTILLON DE 5 COMMITS-------------------------------------
+
+Si y'a 5 commits par exemple:
+
+Commit 1: 15h45
+Commit 2: 22h30
+Commit 3: 15h10
+Commit 4: 01h45
+Commit 5: 08h30
+
+On récupère la tailletotale en seconde ce qui fait:
+15x3600 + 45x60 + 22x3600 + 30x60 + 15x3600 + 10x60 + 1x3600 + 45x60 + 8x3600 + 30x60 = 229200 secondes
+
+Cette tailletotale on la divise par 5 (nombre de commits):
+229200/5= 45840 secondes par commit en moyenne et ça c'est compteur.
+
+On divise une première fois compteur par 60 pour obtenir un nombre en minutes:
+minutes1 = 764 minutes 
+
+minutes 2 c'est ce qu'il nous reste en modulo 60 de minutes 1 après la conversion en heures car on veut une heure fixe.
+Dans notre cas on a minutes2 = 764%60 = 44 minutes
+
+On fait heures = (minutes1-minutes2)/60 = (764-44)/60 = (720/60) = 12 heures et là le chiffre tombe juste c'est pour ça qu'on utilise minutes2
+
+Au final on a bien heures = 12 et minutes2 qui est notre "reste" de minutes qui est 44
+
+Donc l'heure moyenne est 12h44 minutes.
+
+----------------------------------------------------------------------------------------------------
+
+Cela marche pour un faible échantillon de commit mais aussi pour l'ensemble des commits effectués par l'équipe de développement.
+
+On remarque une méthode run qui sert à lancer le plugin.
+
+On peut ensuite trouver un getter de Result qui renvoie le Result si il existe ou alors lance le plugin si aucun result n'existe pour le moment.
+
+
+Ensuite on a la classe Result qui implémente AnalyzerPlugin.Result :
+
+On peut voir qu'il n'y a qu'un attribut string HeureMoyenne car ce plugin renvoie seulement une heure qui est mise en string ,il n'y a donc pas besoin d'utiliser une map car cela ne servirait à rien.
+
+Pour les méthodes de cette classe on a :
+
+- Une méthode getAverageCommitHour qui retourne l'HeureMoyenne sous forme de string.
+- Une méthode getResultAsString qui est donc la même pour les raisons évoquées précedemment
+- Une méthode getResultAsHtmlDiv qui retourne le résultat sous forme html avec un affichage simple pour prage web.
+
+

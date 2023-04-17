@@ -1,0 +1,41 @@
+Documentation CountMergeRequest.java
+
+Documentation de CountMergeRequest.java :
+
+Le but de ce plugin est de compter le nombre de merge request par auteur.
+
+Pour lancer le plugin il faut utiliser la commande: ./gradlew run --args='. - addPlugin=countMergeRequest'
+
+package up.visulog.analyzer;              	  -> Voir documentation du fichier analyzer
+
+import up.visulog.gitrawdata.Commit;	 -> Voir documentation du fichier gitrawdata
+import up.visulog.config.Configuration;	 -> Voir documentation du fichier config
+import up.visulog.gitrawdata.Author;	 -> Voir documentation du fichier DocumentationAuthor
+import up.visulog.gitrawdata.Authors;	 -> Voir documentation du fichier DocumentationAuthor.txt
+
+import java.util.TreeMap		 -> Map triée selon l'ordre naturel de ses clés, ou par un comparateur fourni au moment de la création de la map, selon le constructeur utilisé.
+import java.io.*;			 -> Importation de tous les io.
+import java.util.HashMap;	-> Implémentation de l'interface Map basé sur une table Hash. La classe HashMap est à peu près équivalente à Hashtable, sauf qu'elle est non synchronisée et permet les valeurs nulles.
+import java.util.List;		-> Cette interface permet d'avoir un contrôle précis sur l'endroit de la liste où chaque élément est inséré. On peut accéder aux éléments par leur index entier (position dans la liste), et rechercher des éléments dans la liste.
+import java.util.Map;		-> Permet d'associer des clés à des valeurs. Chaque clé peut correspondre au plus à une valeur.
+import java.util.ArrayList;	-> Implémente l'interface List et étend AbstractList. De plus ArrayList fournit des méthodes pour manipuler la taille du tableau qui est utilisé en interne pour stocker la liste.
+
+La classe CountMergeRequest implémente AnalyzerPlugin et contient :
+
+   - 2 attributs :
+       - configuration, de type Configuration qui contient les configuration du plugin.
+       - result, de type Result qui contient ce que le plugin va renvoyer.
+       
+    - un constructeur qui sert a initaliser l'attribut configuration.
+   
+    - 3 methodes :
+       - processLog, qui renvoie un Result et qui prend en paramètre une list de commits, dans cette methode on parcours la liste de commit et une liste d'auteur et pour chaque commit rajoute dans les map de result le nombre ligne ajouté et supprimés de chaque commit pour chaque auteur.
+       -run, (redefini) de type void qui sert a lancer le plugin
+       -getResult, (redefini) retourne result, si il est null appelle la fonction run()
+       
+   - une classe interne Result qui implemente AnalyzerPlugin.Result et qui contient:
+       - un attribut mergesPerAuthor, une map qui associe un String correspondant au nom de l'auteur, à un integer correspondant au nombre de lignes. 
+       -3 methodes
+		*getMergesPerAuthor, de type Map<String, integer> qui renvoie mergesPerAuthor.
+		*getResultAsString, de type String, qui renvoie une chaine de caractère donnant le nombre de merge request que chaque auteur a fait.
+		*getResultAsHtmlDiv, de type String qui renvoie vers une page html ou l'on voit un diagramme en camembert et redonne le pourcentage de Merge Request par auteur.

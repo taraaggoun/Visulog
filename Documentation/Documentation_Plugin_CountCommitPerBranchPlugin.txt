@@ -1,0 +1,69 @@
+﻿Documentation du plugin CountCommitPerBranchPlugin
+
+	1. La classe CountCommitPerBranchPlugin :
+
+La classe CountCommitPerBranchPlugin implémentant de AnalyzerPlugin se compose de six attributs, d’un constructeur et de six méthodes.
+
+	a. Attributs :
+
+* L’attribut final configuration de type Configuration associé au modificateur private.
+* L’attribut static numberOfCommit de type Long associé au modificateur private.
+* L’attribut uriGitRepo de type String associé au modificateur private.
+* L’attribut static brancheName de type String associé au modificateur private.
+* L’attribut static exist de type boolean initialisé à true.
+* L’attribut static listOfBranchesNames de type Map<String, Long> initialisé à new HashMap<>().
+
+	b. Constructeur :
+
+* Le premier constructeur CountCommitPerBranchPlugin qui prend en paramètre generalConfiguration de type Configuration et qui initialise this.configuration à generalConfiguration. Ce constructeur permet de donner la configuration générale pour l'utiliser afin de distinguer le nom du plugin.
+
+	c. La méthode getUriGitRepo() de type String :
+
+* La méthode getUriGitRepo() retourne le repertoire .git
+* La méthode getUriGitRepo() est composée d’un String userDirectory qui récupère le chemin où se trouve notre répertoire au sein de notre machine, et d'un tableau de chaîne de caractères names qui représente la liste des fichiers au sein du répertoire.
+
+	d. La méthode getBranchName() de type List<String> :
+
+* La méthode getBranchName() retourne la liste des noms des différentes branches.
+
+	e. La méthode createRepo() de type Repository :
+
+* La méthode createRepo() permet de créer un répertoire git a partir de getUriGitRepo().
+* La méthode createRepo() est composée d’un FileRepositoryBuilder repositoryBuilder où l’objet FileRepositoryBuilder est déposé à notre répertoire local, et d’un Repository repository qui sert à la création du répertoire.
+
+	f. La méthode commitCountOnBranch() de type Map<String, Long> :
+
+* La méthode commitCountOnBranch() retourne une Map avec les noms des branches et le nombre de commits dans ces branches.
+* La méthode commitCountOnBranch() est composée de Map<String, Long> listOfBranchesNames qui crée une map avec comme clé les noms des branches de type String et comme valeur le nombres des commits, de Repository repository qui récupère du répertoire récemment créer dans la fonction createRepo(), de Git git qui associe notre répertoire à la bibliothèque jgit pour utiliser les différentes actions sur ce répertoire, de List<Ref> branches qui récupère les branches à partir du répertoire .git
+* La méthode commitCountOnBranch() est aussi composée d’une boucle for qui parcourt les branches pour calculer le nombres des commits dans chacune. 
+
+	g. La méthode run() de type void :
+
+* La méthode run() permet de lancer le plugin.
+
+	h. La méthode getResult() de type Result :
+
+* La méthode getResult() est composée d’un if qui manipule nos résultats,  teste si numberOfCommit est null on refait un appel à run(), et retourne les résultats.
+
+
+	2. La classe Result :
+
+La classe Result implémentant AnalyzerPlugin .Result se compose d’un attribut et de deux méthodes.
+
+	a. Attribut :
+
+* L’attribut final commitsPerBranch de type Map<String, Integer> associé au modificateur public.
+
+	b. La méthode getResultAsString() de type String :
+
+* La méthode getResultAsString() permet de représenter le résultat sous forme de diagramme en barre html en utilisant CanvasJS(site qui permet de générer un script donnant un graph).
+* La méthode getResultAsString() est composée d’un StringBuilder html_head qui est le head de notre page html, et d’un StringBuilder html_body qui est le body de la page html.
+* La méthode getResultAsString() est composée d’une boucle for qui parcourt la Map listOfBranchesNames pour récupérer le couple clé (nom des branches) / valeur (le nombre des commits) afin de les afficher dans le diagramme en barre.
+
+	c. La méthode getResultAsHtmlDiv() de type String :
+
+* La méthode getResultAsHtmlDiv() permet de représenter le résultat sous forme de diagramme en barre html en utilisant CanvasJS(site qui permet de générer un script donnant un graph).
+* La méthode getResultAsHtmlDiv() est composée d’un StringBuilder html_head qui est le head de notre page html, et d’un StringBuilder html_body qui est le body de la page html.
+* La méthode getResultAsHtmlDiv() est composée d’une boucle for qui parcourt la Map listOfBranchesNames pour récupérer le couple clé (nom des branches) / valeur (le nombre des commits) afin de les afficher dans le diagramme en barre.
+
+Conclusion => Le plugin CountCommitPerBranchPlugin permet de représenter un diagramme en barre le nombre de commits de l’ensemble des branches du projet.

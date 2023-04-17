@@ -1,0 +1,19 @@
+ContributionPlugin
+
+Il s'agit d'un plugin permettant la visualisation de la contribution des auteurs du projet
+[Important de préciser que ce plugin faisait auparavant parti de CountCommitsPerAuthors (je l'avais créer et ajouter la bas
+pour faire un plugin regroupant diverses informations). Pour alléger le temps d'execution, j'ai décidé d'en faire un
+plugin à part entière.]
+Ce plugin contient 2 graphique circulaire :
+    - un premier représentant le pourcentage de contribution de chaque personne DANS LA BRANCHE OU ON EST
+    - un deuxième représentant le pourcentage de contribution de chaque personne DANS LA GLOBALITE DU PROJET
+
+Le code de chaque graphique a été récuperer sur le site canvasjs.com
+
+Pour la réalisation de ce plugin, l'utilisation de 2 Map s'est vue être nécessaire.
+En effet, comme nous avons deux graphique ne contenant pas les mêmes données, il fallait pouvoir les séparer.
+De plus, il fallait également récuperer d'une part, uniquement les commits sur cette branche, et d'une autre part, tous
+les commits.
+Il a donc fallut la création de la commande parseLogFromCommandAll (Merci Tara) et l'utiliser en même temps
+que parseLogFromCommand.
+J'ai donc décider de passer chaque liste de commit en argument pour simplifier l'utilisation des données.

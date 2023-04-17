@@ -1,0 +1,27 @@
+
+
+table {
+    border: 1px solid gray;
+    width: 600px;
+    border-collapse: collapse;
+}
+
+caption {
+font-size:22px;
+}
+
+th {
+    background-color: #8c9eff;
+    text-align: center;
+    width: 80%;
+    border: 1px solid gray;
+    padding: 5px;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid gray;
+    width: 80%;
+    text-align: center;
+    background-color: #ffffff;
+}

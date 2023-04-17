@@ -1,0 +1,93 @@
+							Commande Git
+.Installation:
+	.$ sudo apt install git
+
+.Configuration:
+	.couleur pour plus de lisibilité
+		.$ git config --global color.diff auto
+		.$ git config --global color.status auto
+		.$ git config --global color.branch auto
+		.$ git config --global credential.helper store 
+	.pseudo
+		.$ git config --global user.name "pseudo"
+	.e-mail
+		.$ git config --global user.email _adresse mail_
+	.texte editeur
+		.$ git config --global core.editor _texte editeur_
+	.On peut aussi crée un fichier .gitconfig pour crée une section alias (raccourcis)
+
+.Depot:
+	.cree un depot
+		.$ git init
+	.cloner un depot
+		.$ git clone _adresse url du depot_
+
+.Modifier le code:
+	.$ git status             -> connaitre l'etat du dêpot
+	.$ git diff               -> visualiser les modification pas encor enregistreés
+	.$ git add _nomfichier_   -> ajoute les fichiers à la liste de ceux devant faire l’objet d’un commit
+	.$ git commit:
+		. -a  pour «commiter» tous les fichiers qui étaient listés 
+		. -preciser les fichier a "commité"
+		. -m 'Message'	ecrire un essage en ligne de commande
+		. --amend modifier le dernier message de commit
+	.$git reset (annule un commit):
+		. HEAD   le dernier commit
+		. HEAD^  l'avant-dernier commit
+		. HEAD^^ ou HEAD~2 l'avant-avant-dernier commit
+		. HEAD~n n un entier positif, rmonte de n commits
+		. _numero du commit_ marche aussi, les premier chiffre du numero suffise si aucun autre commit ne commence ar eux)
+		. -- hard annule les commits et perd tous les changements
+		. -- soft l'arborescence de travail et l'index ne sont pas modifiés
+		. -- mixed remplace en plus l'index pr le contenue de HEAD
+		. -- file copie file de HEAD vers index
+
+	.$ git log :
+		.-p détail des lignes qui ont été ajoutées et retirées dans chaque commit
+		.--stat résumé plus court des commits
+	 
+	.$ git pull	-> télécharge les nouveautés depuis le serveur (revient a faire: $ git fetch qui telecharge les nouveaux commits et $ git merge  qui fusione les commits du serveur avec ceux de l'ordinateur)
+		.--rebase	-> historique linéaire contenant les commits distants
+	.$ git push	-> envoie les commits
+		.-u		-> exporter une branche sur un autre depot
+	.$ git revert	-> qui va créer un commit « inverse »
+	-$ git blame _nom du fichier_ -> renvoie le fichier avec n°du commit - nom de l'auteur - date - heure - time zone - n°ligne - ligne
+	-$ git show n°du commit -> montre les modification du commit 
+		. --numstat  
+	.$ git branch 
+		.-r	-> voir les branches
+		.-d	-> supprime la branche
+		.-D	-> supprime la branche et perd tout les changement
+		.--track -> créer une copie de a brnche sur l'ordinateur
+	.$ git stash 	-> les fichier modifier seront sauvegarder et mis de côté
+		.apply		-> recuperer les changement dans "mabranche" 
+	.$ git checkout-> changer de branche / restaurer un fichier avant le dernier commit
+		.--filenme 	-> restaure un fichier dans son état précédent
+		.-b 		-> créer une nouvlle propre branche dans votre dépôt local
+		.--file	-> copie file de HEAD vers index et l'arborescence de travail
+	.$ git rebase _ref_	-> réecris le sommet de l'historique d'une branche sur une autre
+	
+.Pour ajouter un tag sur un commit :
+	.$ git tag _nomtag_ _IDcommit_
+		.-d	-> supprime un tag
+		.--tags a ajouter a push (ne se fait pas automatiquement)
+	.$ git grep _Tag_	-> les nom des fichier tager par le tag
+		.-n	-> pour avoir les numeros de lignes
+
+.$ git-svn 	-> sert a migrer des projet de Git a un serveur SVN
+
+*********************************************************************************
+*			Pour faire un commit:					*
+*- $ git pull (pour mettre a jour le depot local)				*
+*- $ git add _nomfichier_ (pour ajouter le fichier)				*
+*- $ git commit -m 'message' (pour rajouter un message)				*
+*- $ git push ( pour push sur le depot distant)					*
+*										*
+*			Pour créer une branche :				*
+*- $ git checkout -b _nom de la branche_ (sans le -b pour changer de branche)	*
+*- quand vous créer une branche pour deposer votre issue le nom de la branche 	*
+*		doit être le numero de l'issue - le nom de l'issue		*
+*										*
+*********************************************************************************	
+				
+							
